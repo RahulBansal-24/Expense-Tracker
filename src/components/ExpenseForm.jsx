@@ -1,75 +1,45 @@
 import { useEffect, useState } from "react";
 
-const initialExpense = {
-  desc: "",
-  amount: "",
-  category: "",
-  date: "",
-};
+const initialExpense = { desc: "", amount: "", category: "", date: "" };
 
-function ExpenseForm({ isEditing, submitExpense }) {
+function ExpenseForm({ submitExpense, isEditing }) {
   const [expense, setExpense] = useState(initialExpense);
 
   useEffect(() => {
-    if (isEditing) {
-      setExpense(isEditing);
-    }
+    if (isEditing) setExpense(isEditing);
   }, [isEditing]);
 
-  function handleExpenseSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-
-    if (isEditing) {
-      submitExpense(isEditing.id, expense);
-    } else {
-      submitExpense(expense);
-    }
-
+    isEditing
+      ? submitExpense(isEditing.id, expense)
+      : submitExpense(expense);
     setExpense(initialExpense);
   }
 
   return (
-    <div className="expense-form">
-      <form onSubmit={handleExpenseSubmit}>
-        <input
-          required
-          type="text"
-          placeholder="Description"
-          value={expense.desc}
-          onChange={(e) => setExpense({ ...expense, desc: e.target.value })}
-        />
+    <div className="expense-form card">
+      <h2 className="section-title">➕ Add / Edit Expense</h2>
 
-        <input
-          required
-          type="number"
-          placeholder="Amount"
-          value={expense.amount}
-          onChange={(e) =>
-            setExpense({ ...expense, amount: Number(e.target.value) })
-          }
-        />
+      <form className="expense-form-grid" onSubmit={handleSubmit}>
+        <input placeholder="Description" required value={expense.desc}
+          onChange={(e) => setExpense({ ...expense, desc: e.target.value })} />
 
-        <select
-          required
-          value={expense.category}
-          onChange={(e) => setExpense({ ...expense, category: e.target.value })}
-        >
-          <option value="" disabled>
-            Select category
-          </option>
-          <option value="Food">Food</option>
-          <option value="Bills">Bills</option>
-          <option value="Orders">Orders</option>
-          <option value="Clothes">Clothes</option>
-          <option value="Electronics">Electronics</option>
+        <input type="number" placeholder="Amount" required value={expense.amount}
+          onChange={(e) => setExpense({ ...expense, amount: Number(e.target.value) })} />
+
+        <select required value={expense.category}
+          onChange={(e) => setExpense({ ...expense, category: e.target.value })}>
+          <option value="">Select Category</option>
+          <option>Food</option>
+          <option>Bills</option>
+          <option>Orders</option>
+          <option>Clothes</option>
+          <option>Electronics</option>
         </select>
 
-        <input
-          required
-          type="date"
-          value={expense.date}
-          onChange={(e) => setExpense({ ...expense, date: e.target.value })}
-        />
+        <input type="date" required value={expense.date}
+          onChange={(e) => setExpense({ ...expense, date: e.target.value })} />
 
         <button type="submit">
           {isEditing ? "Update Expense" : "Add Expense"}

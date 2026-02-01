@@ -1,47 +1,73 @@
-/* Reset & base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
-    sans-serif;
+  font-family: "Inter", system-ui, sans-serif;
 }
 
 body {
-  background: linear-gradient(135deg, #0f172a, #020617);
-  color: #e5e7eb;
   min-height: 100vh;
+  background: linear-gradient(120deg, #f8fafc, #eef2ff);
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* App container */
+/* Animated background blobs */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #38bdf8, transparent 70%);
+  opacity: 0.15;
+  animation: float 20s infinite alternate ease-in-out;
+  z-index: -1;
+}
+
+body::after {
+  background: radial-gradient(circle, #22c55e, transparent 70%);
+  right: -150px;
+  bottom: -150px;
+  animation-delay: 5s;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0) translateX(0);
+  }
+  to {
+    transform: translateY(-60px) translateX(40px);
+  }
+}
+
 .app-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: auto;
+  padding: 3rem 1.5rem;
 }
 
-/* Headings */
-h1 {
-  text-align: center;
-  margin-bottom: 2rem;
-  font-size: 2.4rem;
-  font-weight: 700;
-  background: linear-gradient(to right, #38bdf8, #22c55e);
+.app-title {
+  font-size: 3.2rem;
+  font-weight: 900;
+  margin-bottom: 3rem;
+  background: linear-gradient(90deg, #38bdf8, #22c55e);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Buttons */
-button {
-  cursor: pointer;
-  border: none;
-  border-radius: 8px;
-  padding: 0.45rem 0.75rem;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #020617;
 }
 
-button:hover {
-  transform: translateY(-1px);
-  opacity: 0.9;
+.card {
+  background: white;
+  border-radius: 22px;
+  padding: 2rem;
+  box-shadow:
+    0 20px 40px rgba(15, 23, 42, 0.08),
+    0 6px 20px rgba(15, 23, 42, 0.05);
 }
